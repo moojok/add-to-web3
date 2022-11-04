@@ -4,10 +4,14 @@ const { addToWeb3, pickName } = require('./web3')
 
 async function run() {
   try {
+    const filename = core.getInput('file_name')
+    // const name = pickName({
+    //  repo: process.env.GITHUB_REPOSITORY,
+    //  run: process.env.GITHUB_RUN_NUMBER,
+    //  sha: process.env.GITHUB_SHA
+    // })
     const name = pickName({
-      repo: process.env.GITHUB_REPOSITORY,
-      run: process.env.GITHUB_RUN_NUMBER,
-      sha: process.env.GITHUB_SHA
+      repo: filename
     })
     const pathToAdd = core.getInput('path_to_add')
     const token = core.getInput('web3_token')
