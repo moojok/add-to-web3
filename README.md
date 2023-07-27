@@ -4,7 +4,7 @@
 ## Example usage
 
 ```yaml
-uses: moojok/add-to-web3@main
+uses: moojok/add-to-ipfs@main
 id: web3
 with:
   web3_token: ${{ secrets.WEB3_TOKEN }}
