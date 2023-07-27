@@ -45,7 +45,7 @@ Service type either `web3.storage` or `moralis` to upload the path.
 
 _Default_ `false`
 
-Should the `path_to_add` be wrapped in a diretory when creating the IPFS DAG. For most folks using this action the default of `false` is fine. 
+Should the `path_to_add` be wrapped in a diretory when creating the IPFS DAG. For most folks using this action the default of `false` is fine.
 
 This is the opposite of the default that web3.storage uses, as this action is commonly used to add a directory that contains a static website to IPFS. In that case you want the path_to_add to become the root cid so you can host your site at `https://<cid>.ipfs.w3s.link` rather than `https://<cid>.ipfs.w3s.link/<path_to_add>`.
 
@@ -73,18 +73,17 @@ Useful for testing against staging deployments by setting to the api origin of y
 
 ### `cid`
 
-The IPFS content ID for the directory on IPFS. 
+The IPFS content ID for the directory on IPFS.
 e.g. `bafkreicysg23kiwv34eg2d7qweipxwosdo2py4ldv42nbauguluen5v6am`
 
 ### `url`
 
-The IPFS gateway URL for the directory 
+The IPFS gateway URL for the directory
 e.g. `https://w3s.link/ipfs/bafkreicysg23kiwv34eg2d7qweipxwosdo2py4ldv42nbauguluen5v6am`
-
 
 ## Contibuting
 
-💌 Considerate contributions welcome! 
+💌 Considerate contributions welcome!
 
 The `dist` folder is commited to the repo as is the curious cultural norm with JS actions, as the repo is the delivery mechanism, so to spare some cycles for the user users, all the deps are bundled into a single /dist/index.js monolith.
 
