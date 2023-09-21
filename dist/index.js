@@ -42261,7 +42261,7 @@ module.exports = take
 /***/ 9575:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const nativeAddon = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.glibc.node")
+const nativeAddon = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.glibc1.node")
 if (typeof nativeAddon !== 'function') {
   // Some new runtimes (bun) don't support N-API
   // but the build step incorrectly succeeds.
@@ -52728,7 +52728,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /***/ 6157:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const addon = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.glibc1.node")
+const addon = require(__nccwpck_require__.ab + "prebuilds/linux-x64/node.napi.glibc.node")
 module.exports = __nccwpck_require__(863)(new addon.Secp256k1())
 
 
