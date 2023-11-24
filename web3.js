@@ -1,24 +1,24 @@
-const { getFilesFromPath } = require("files-from-path");
-const { Web3Storage } = require("web3.storage");
+const { getFilesFromPath } = require('files-from-path')
+const { Web3Storage } = require('web3.storage')
 
-async function addToWeb3({
+async function addToWeb3 ({
   endpoint,
   token,
   pathToAdd,
   name,
   wrapWithDirectory = false,
-  includeHidden,
+  includeHidden
 }) {
-  const web3 = new Web3Storage({ endpoint, token });
-  const files = await getFilesFromPath(pathToAdd, { hidden: includeHidden });
-  const cid = await web3.put(files, { name, wrapWithDirectory });
-  const url = `https://w3s.link/ipfs/${cid}`;
-  return { cid, url };
+  const web3 = new Web3Storage({ endpoint, token })
+  const files = await getFilesFromPath(pathToAdd, { hidden: includeHidden })
+  const cid = await web3.put(files, { name, wrapWithDirectory })
+  const url = `https://w3s.link/ipfs/${cid}`
+  return { cid, url }
 }
 
-function pickName({ repo }) {
-  return `${repo.replace("/", "-")}`;
+function pickName ({ repo }) {
+  return `${repo.replace('/', '-')}`
 }
 
-module.exports.addToWeb3 = addToWeb3;
-module.exports.pickName = pickName;
+module.exports.addToWeb3 = addToWeb3
+module.exports.pickName = pickName

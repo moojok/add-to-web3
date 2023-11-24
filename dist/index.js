@@ -4,40 +4,40 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /***/ 8123:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const Moralis = __nccwpck_require__(6139);
-const glob = __nccwpck_require__(1957);
-const path = __nccwpck_require__(1017);
-const fs = __nccwpck_require__(7147);
+const Moralis = __nccwpck_require__(6139)
+const glob = __nccwpck_require__(1957)
+const path = __nccwpck_require__(1017)
+const fs = __nccwpck_require__(7147)
 
-async function addToMoralis({
+async function addToMoralis ({
   pathToAdd,
   token,
   wrapWithDirectory,
-  includeHidden,
+  includeHidden
 }) {
-  const files = glob.sync(path.join(pathToAdd, `/**/*.*`), {
+  const files = glob.sync(path.join(pathToAdd, '/**/*.*'), {
     dot: includeHidden,
-    nodir: true,
-  });
+    nodir: true
+  })
   const abi = files.map((filePath) => ({
     path: wrapWithDirectory
       ? filePath
-      : filePath.replace(path.join(pathToAdd, "/").toString(), ""),
-    content: fs.readFileSync(filePath, { encoding: "base64" }),
-  }));
+      : filePath.replace(path.join(pathToAdd, '/').toString(), ''),
+    content: fs.readFileSync(filePath, { encoding: 'base64' })
+  }))
   await Moralis.default.start({
-    apiKey: token,
-  });
+    apiKey: token
+  })
 
   const response = await Moralis.default.EvmApi.ipfs.uploadFolder({
-    abi,
-  });
-  const cid = response.result[0].path.match("/ipfs/(.*?)/")[1];
-  const url = `https://w3s.link/ipfs/${cid}`;
-  return { cid, url };
+    abi
+  })
+  const cid = response.result[0].path.match('/ipfs/(.*?)/')[1]
+  const url = `https://w3s.link/ipfs/${cid}`
+  return { cid, url }
 }
 
-module.exports = { addToMoralis };
+module.exports = { addToMoralis }
 
 
 /***/ }),
@@ -60910,30 +60910,30 @@ function wrappy (fn, cb) {
 /***/ 7649:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const { getFilesFromPath } = __nccwpck_require__(5090);
-const { Web3Storage } = __nccwpck_require__(8272);
+const { getFilesFromPath } = __nccwpck_require__(5090)
+const { Web3Storage } = __nccwpck_require__(8272)
 
-async function addToWeb3({
+async function addToWeb3 ({
   endpoint,
   token,
   pathToAdd,
   name,
   wrapWithDirectory = false,
-  includeHidden,
+  includeHidden
 }) {
-  const web3 = new Web3Storage({ endpoint, token });
-  const files = await getFilesFromPath(pathToAdd, { hidden: includeHidden });
-  const cid = await web3.put(files, { name, wrapWithDirectory });
-  const url = `https://w3s.link/ipfs/${cid}`;
-  return { cid, url };
+  const web3 = new Web3Storage({ endpoint, token })
+  const files = await getFilesFromPath(pathToAdd, { hidden: includeHidden })
+  const cid = await web3.put(files, { name, wrapWithDirectory })
+  const url = `https://w3s.link/ipfs/${cid}`
+  return { cid, url }
 }
 
-function pickName({ repo }) {
-  return `${repo.replace("/", "-")}`;
+function pickName ({ repo }) {
+  return `${repo.replace('/', '-')}`
 }
 
-module.exports.addToWeb3 = addToWeb3;
-module.exports.pickName = pickName;
+module.exports.addToWeb3 = addToWeb3
+module.exports.pickName = pickName
 
 
 /***/ }),
@@ -94693,57 +94693,57 @@ module.exports = JSON.parse('{"application/1d-interleaved-parityfec":{"source":"
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-const core = __nccwpck_require__(2186);
-const { addToMoralis } = __nccwpck_require__(8123);
-const { addToWeb3, pickName } = __nccwpck_require__(7649);
+const core = __nccwpck_require__(2186)
+const { addToMoralis } = __nccwpck_require__(8123)
+const { addToWeb3, pickName } = __nccwpck_require__(7649)
 
-async function run() {
+async function run () {
   try {
-    const filename = core.getInput("file_name");
+    const filename = core.getInput('file_name')
     // const name = pickName({
     //  repo: process.env.GITHUB_REPOSITORY,
     //  run: process.env.GITHUB_RUN_NUMBER,
     //  sha: process.env.GITHUB_SHA
     // })
     const name = pickName({
-      repo: filename,
-    });
-    const pathToAdd = core.getInput("path_to_add");
-    const token = core.getInput("web3_token");
-    const service = core.getInput("service") || "web3.storage";
-    const wrapWithDirectory = core.getBooleanInput("wrap_with_directory");
-    const includeHidden = core.getInput("include_hidden");
-    let response;
-    if (service === "web3.storage") {
-      const endpoint = new URL(core.getInput("web3_api"));
-      core.info(`Adding ${pathToAdd} to ${endpoint.origin}`);
+      repo: filename
+    })
+    const pathToAdd = core.getInput('path_to_add')
+    const token = core.getInput('web3_token')
+    const service = core.getInput('service') || 'web3.storage'
+    const wrapWithDirectory = core.getBooleanInput('wrap_with_directory')
+    const includeHidden = core.getInput('include_hidden')
+    let response
+    if (service === 'web3.storage') {
+      const endpoint = new URL(core.getInput('web3_api'))
+      core.info(`Adding ${pathToAdd} to ${endpoint.origin}`)
       response = await addToWeb3({
         endpoint,
         token,
         name,
         pathToAdd,
         wrapWithDirectory,
-        includeHidden,
-      });
+        includeHidden
+      })
     } else {
-      core.info(`Adding ${pathToAdd}`);
+      core.info(`Adding ${pathToAdd}`)
       response = await addToMoralis({
         pathToAdd,
         token,
         wrapWithDirectory,
-        includeHidden,
-      });
+        includeHidden
+      })
     }
-    const { cid, url } = response;
-    core.info(url);
-    core.setOutput("cid", cid);
-    core.setOutput("url", url);
+    const { cid, url } = response
+    core.info(url)
+    core.setOutput('cid', cid)
+    core.setOutput('url', url)
   } catch (error) {
-    core.setFailed(error.message);
+    core.setFailed(error.message)
   }
 }
 
-run();
+run()
 
 })();
 
